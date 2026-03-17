@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Refinite </title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+    <h1>Refinite</h1>
+    <nav>
+        <a href="#dashboard">Dashboard</a>
+        <a href="#feedback">Feedback</a>
+        <a href="#submit">Submit Feedback</a>
+    </nav>
+</header>
+
+<main>
+
+    <!-- Hero -->
+    <section class="hero">
+        <h2>Centralized Feedback for Freelancers and Clients</h2>
+        <p>
+            A secure platform that keeps project feedback organized, clear,
+            and easy to act on throughout the project lifecycle.
+        </p>
+        <button>View Dashboard</button>
+    </section>
+
+    <!-- Dashboard -->
+    <section id="dashboard" class="card">
+        <h3>Your Dashboard</h3>
+        <div class="stats">
+
+            <div class="stat-box">
+                <h4>Active Projects</h4>
+                <p>3</p>
+            </div>
+
+            <div class="stat-box">
+                <h4>Unread Feedback</h4>
+                <p>5</p>
+            </div>
+
+            <div class="stat-box">
+                <h4>Resolved Items</h4>
+                <p>12</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Feedback list -->
+    <section id="feedback" class="card">
+
+        <h3>Recent Feedback</h3>
+
+        <div class="feedback-item">
+            <h4>Website Redesign</h4>
+            <p>Please adjust spacing on homepage sections.</p>
+            <span class="status open">Open</span>
+        </div>
+
+        <div class="feedback-item">
+            <h4>Mobile App UI</h4>
+            <p>The navigation improvements look great.</p>
+            <span class="status resolved">Resolved</span>
+        </div>
+
+    </section>
+
+    <!-- Submit form -->
+    <section id="submit" class="card">
+
+        <h3>Submit Feedback</h3>
+
+        <form>
+
+            <label>Project Name</label>
+            <input type="text" placeholder="Enter project name">
+
+            <label>Feedback</label>
+            <textarea placeholder="Enter feedback"></textarea>
+
+            <button type="submit">Submit Feedback</button>
+
+        </form>
+
+    </section>
+
+</main>
+
+<footer>
+    <p>Capstone Project — Secure Feedback Platform Prototype</p>
+</footer>
+
+</body>
+</html>

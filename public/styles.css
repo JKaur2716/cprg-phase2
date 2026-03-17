@@ -1,0 +1,119 @@
+/* Reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f8;
+    color: #333;
+}
+
+/* Header */
+header {
+    background-color: #1f2937;
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav a {
+    color: white;
+    margin-left: 20px;
+    text-decoration: none;
+}
+
+/* Hero */
+.hero {
+    background-color: #2563eb;
+    color: white;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.hero button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: none;
+    background-color: white;
+    color: #2563eb;
+    cursor: pointer;
+}
+
+/* Cards */
+.card {
+    background-color: white;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+/* Dashboard stats */
+.stats {
+    display: flex;
+    gap: 20px;
+}
+
+.stat-box {
+    background-color: #f1f5f9;
+    padding: 15px;
+    flex: 1;
+    text-align: center;
+    border-radius: 6px;
+}
+
+/* Feedback */
+.feedback-item {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+.status {
+    display: inline-block;
+    margin-top: 5px;
+    padding: 4px 8px;
+    font-size: 12px;
+    border-radius: 4px;
+}
+
+.open {
+    background-color: #facc15;
+}
+
+.resolved {
+    background-color: #4ade80;
+}
+
+/* Form */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input, textarea {
+    margin-top: 5px;
+    margin-bottom: 15px;
+    padding: 8px;
+}
+
+button[type="submit"] {
+    background-color: #2563eb;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #1f2937;
+    color: white;
+    margin-top: 20px;
+}
