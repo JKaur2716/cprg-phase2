@@ -54,8 +54,8 @@ app.use(express.static("public", {
     }
 }));
 
-//Filler(mock) Data
-
+// Phase 2: Mock User Database
+const users = [];
 const feedback = [
 {
     id:1,
@@ -124,6 +124,35 @@ app.get("/dashboard", (req, res) => {
             activeProjects: 3,
             unreadFeedback: 5
         });
+});
+
+// Phase 2 - Part A - User Registration --
+app.post("/register", async (req, res) => {
+    try {
+        const { username, password } = req.body;
+
+        // 1. Checking existing users
+        const existingUser = user.find(u => u.username === username);
+        if (existingUser) {
+            return res.status(400).json({ error: "User already exists"});
+        }
+
+        // 2. Hashing the password (Security: Salt rounds = 10)
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // 3. Save user with a default 'user' role
+        const newUser = {
+            id: user.length + 1,
+            username,
+            password: hashedPassword, 
+            role: "user" // Default role for RBAC
+        };
+        users.push(newUser);
+
+        res.status(201).json({message: "User registered successfully!"})
+        } catch (error) {
+            res.status(500).json({error: "Internal server error"});
+        }
 });
 
 //Start Secure HTTPS Server
