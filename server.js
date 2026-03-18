@@ -230,6 +230,12 @@ app.post("/login", async (req, res) => {
     }
 });
 
+// Phase 2: Part E - Logout 
+app.get("/logout", (req, res) => {
+    res.clearCookie("token");
+    res.json({ message: "Logged out successfully" });
+});
+
 //Start Secure HTTPS Server
 
 https.createServer(sslOptions, app).listen(3000, () => {

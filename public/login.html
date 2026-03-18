@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Revisal – Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+ 
+<body>
+<div class="page">
+ 
+  <div class="left">
+    <div class="left-logo">
+      <img src="Images/revisal-logo.png" alt="Revisal" />
+    </div>
+    <div class="left-copy">
+      <h1>Manage your projects with clarity.</h1>
+      <p>Track every stage, collaborate with your team, and hit every deadline — all in one place.</p>
+    </div>
+    <div class="left-footer">
+      &copy; 2026 Revisal. All rights reserved.
+    </div>
+  </div>
+ 
+  <div class="right">
+    <div class="card">
+      <h2>Fancy seeing you here!</h2>
+      <p class="subtitle">Sign in to your Revisal account</p>
+ 
+      <form class="form" id="loginForm">
+        <div class="field">
+          <label for="username">Username</label> <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Enter your username"
+            required
+          />
+        </div>
+ 
+        <div class="field">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Enter your password"
+            autocomplete="current-password"
+            required
+          />
+        </div>
+ 
+        <div class="forgot">
+          <a href="#">Forgot password?</a>
+        </div>
+ 
+        <button type="submit" class="btn-submit">Sign in</button>
+ 
+        <div class="divider"><span>or</span></div>
+ 
+        <p class="signup-nudge">
+          Don't have an account? <a href="#">Sign up</a>
+        </p>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  const loginForm = document.getElementById('loginForm');
+
+  loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault(); // Stop the page from reloading immediately
+
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    try {
+      const response = await fetch('/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Redirect to the dashboard if login is successful
+        window.location.href = '/index.html'; 
+      } else {
+        // Show an error message if it fails
+        alert(data.error || "Login failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("Login Error:", error);
+      alert("Something went wrong. Is the server running?");
+    }
+  });
+</script>
+
+</body>
+</html>

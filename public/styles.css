@@ -422,3 +422,262 @@ tbody td:first-child {
   font-size: 13px;
   color: var(--text-muted);
 }
+
+* 
+   Reset
+ */
+ 
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+ 
+ 
+/*
+   Tokens & variables
+*/
+ 
+:root {
+  --purple:     #5a4a8a;
+  --yellow:     #ffe4a1;
+  --cream:      #fef9ec;
+  --text:       #1e1a2e;
+  --text-mid:   #4a4060;
+  --text-muted: #8b7faa;
+  --radius:     14px;
+}
+ 
+ 
+/* 
+   Base
+ */
+ 
+html, body {
+  height: 100%;
+  font-family: "Lexend", sans-serif;
+  background: var(--purple);
+  color: var(--text);
+}
+ 
+ 
+/*
+   Page layout — two columns
+ */
+ 
+.page {
+  display: flex;
+  height: 100vh;
+}
+ 
+ 
+/* 
+   Left panel (branding side)
+ */
+ 
+.left {
+  width: 45%;
+  background: var(--yellow);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 48px;
+}
+ 
+.left-logo img {
+  width: 150px;
+}
+ 
+.left-copy h1 {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.25;
+  letter-spacing: -0.5px;
+}
+ 
+.left-copy p {
+  font-size: 15px;
+  color: var(--text-mid);
+  margin-top: 14px;
+  line-height: 1.6;
+  max-width: 360px;
+}
+ 
+.left-footer {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+ 
+ 
+/* 
+   Right panel (form side)
+*/
+ 
+.right {
+  flex: 1;
+  background: var(--purple);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+}
+ 
+.card {
+  background: var(--cream);
+  border-radius: 20px;
+  padding: 48px 44px;
+  width: 100%;
+  max-width: 420px;
+}
+ 
+.card h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.3px;
+}
+ 
+.card .subtitle {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-top: 6px;
+}
+ 
+ 
+/* 
+   Form elements
+*/
+ 
+.form {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+ 
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+ 
+.field label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-mid);
+}
+ 
+.field input {
+  padding: 12px 16px;
+  border: 1.5px solid rgba(90, 74, 138, 0.2);
+  border-radius: 10px;
+  font-family: "Lexend", sans-serif;
+  font-size: 14px;
+  color: var(--text);
+  background: white;
+  outline: none;
+  transition: border-color 0.2s;
+}
+ 
+.field input:focus {
+  border-color: var(--purple);
+}
+ 
+.field input::placeholder {
+  color: var(--text-muted);
+}
+ 
+ 
+/* 
+   Forgot password link
+ */
+ 
+.forgot {
+  text-align: right;
+  margin-top: -10px;
+}
+ 
+.forgot a {
+  font-size: 12px;
+  color: var(--purple);
+  text-decoration: none;
+  font-weight: 500;
+}
+ 
+.forgot a:hover {
+  text-decoration: underline;
+}
+ 
+ 
+/* 
+   Submit button
+*/
+ 
+.btn-submit {
+  width: 100%;
+  padding: 13px;
+  background: var(--purple);
+  color: var(--yellow);
+  border: none;
+  border-radius: 10px;
+  font-family: "Lexend", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 6px;
+  transition: opacity 0.15s, transform 0.15s;
+}
+ 
+.btn-submit:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+ 
+ 
+/* 
+   Divider
+*/
+ 
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 4px 0;
+}
+ 
+.divider span {
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+ 
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: rgba(90, 74, 138, 0.15);
+}
+ 
+ 
+/* 
+   Sign up nudge
+ */
+ 
+.signup-nudge {
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 8px;
+}
+ 
+.signup-nudge a {
+  color: var(--purple);
+  font-weight: 600;
+  text-decoration: none;
+}
+ 
+.signup-nudge a:hover {
+  text-decoration: underline;
+}
