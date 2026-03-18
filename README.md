@@ -35,3 +35,9 @@ Our approach to authentication prioritizes data integrity and resistance to comm
 - How it works: Whenever someone tries to visit a private page (like /profile), our authenticateJWT function stops them and asks: "Do you have a valid ID card (token) in your cookies?"
 - Checking Roles: Not all users are equal. We added a second check called authorizeRoles. This ensures that even if you're logged in, you can't get into the /dashboard unless your ID card specifically says you are an Admin.
 - Why this is better: It keeps our security logic in one place. Instead of writing "Are you logged in?" on every single page, we just tell the route to use our guard.
+
+## Bug Fix: Securing the Gatekeeper
+- During testing, I discovered that the /profile and /dashboard routes were still accessible even without a valid login.
+- The Issue: While the authenticateJWT middleware was written, it hadn't been properly "applied" to the specific route definitions.
+- The Fix: I updated the route signatures to include the middleware as a protective layer. Now, the server intercepts every request to these pages, checks for a valid cookie, and rejects anyone who isn't logged in.
+- RBAC(role based access control) Enforcement: I also ensured the /dashboard specifically requires the admin role, successfully separating general user access from administrative data.

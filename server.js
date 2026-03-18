@@ -138,7 +138,7 @@ app.post("/feedback", (req, res) => {
 
 
 // Accessible to ANY authenticated user
-app.get("/profile", authenticateJWT, (req, res) => {
+app.get("/profile", authenticateJWT, (req, res) => { 
     res.set("cache-control", "no-store, private");
     res.json({
         message: "Welcome to your profile",
