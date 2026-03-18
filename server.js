@@ -132,7 +132,7 @@ app.post("/register", async (req, res) => {
         const { username, password } = req.body;
 
         // 1. Checking existing users
-        const existingUser = user.find(u => u.username === username);
+        user.find(u => u.username === username);
         if (existingUser) {
             return res.status(400).json({ error: "User already exists"});
         }
@@ -142,7 +142,7 @@ app.post("/register", async (req, res) => {
 
         // 3. Save user with a default 'user' role
         const newUser = {
-            id: user.length + 1,
+            id: users.length + 1,
             username,
             password: hashedPassword, 
             role: "user" // Default role for RBAC
@@ -153,6 +153,46 @@ app.post("/register", async (req, res) => {
         } catch (error) {
             res.status(500).json({error: "Internal server error"});
         }
+});
+
+// Phase 2: Part c - User login & JWT Issuance //
+app.post("/login", async (req, res) => {
+    try {
+        const { username, password } = req.body;
+
+        //1. Finding User
+        const user = users.find(u => u.username === username);
+
+        // Security: Using a generic error message to protect from hackers 
+        if (!user) {
+            return res.status(401).json({ error: "Invalid username or password" });
+        }
+
+        // 2. Comparing the provided password with the hashed password in "DB"
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(401).json({ error: "Invalid username or password" });
+        }
+
+        // 3. Creating a JWT token (signed with a secret key)
+        const token = jwt.sign(
+            { id: user.id, username: user.username, role: user.role },
+            "super-secret-key", 
+            { expiresIn: "1h" }
+        );
+
+        // 4. Sending the JWT in an HttpOnly, Secure Cookie
+        res.cookie("token", token, {
+            httpOnly: true,     
+            secure: true,       
+            sameSite: "Strict",  
+            maxAge: 3600000
+        });
+
+        res.json({ message: "Login successful!", role: user.role });
+    } catch (error) {
+        res.status(500).json({ error: "Internal server error" });
+    }
 });
 
 //Start Secure HTTPS Server

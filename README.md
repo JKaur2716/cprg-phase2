@@ -8,7 +8,7 @@ Fixings Phase 1 based on Ashlyn's Feedback:
 - Static Asset Caching: Configured express.static with setHeaders to enforce a 24-hour cache policy for CSS files, aligning code with project documentation.
 --------------------------------------------
 
-Phase 2: Authentication & Authorization
+# Phase 2: Authentication & Authorization
 
 Part A: Designing a Secure Authentication System
 Our approach to authentication prioritizes data integrity and resistance to common web vulnerabilities. We chose 'Local Authentication' combined with 'password hashing' to protect user credentials.
@@ -16,3 +16,13 @@ Our approach to authentication prioritizes data integrity and resistance to comm
 - Password Hashing: We implemented `bcryptjs` to hash passwords before storage. This ensures that even if the server data is compromised, raw passwords are never exposed. 
 -  Salt Factor: We used a cost factor of 10 to balance security (making it computationally expensive for hackers to brute-force) and performance (ensuring a fast experience for legitimate users).
 -  User Storage: Users are currently managed in a server-side array (`users[]`), which stores unique IDs, usernames, hashed passwords, and assigned roles.
+
+
+# Part C: Keeping Users Logged In Securely (JWT)
+
+- Once a user logs in, we need a way to remember who they are without asking for their password on every single click. We chose JSON Web Tokens (JWT) to handle this.
+- How Login Works: When you successfully log in, the server gives you a "digital ID card" (the JWT). This card holds your username and your role (like "admin" or "user"), so the server knows exactly what you’re allowed to see.
+- Where We Store the Token: We decided to store these tokens in HttpOnly cookies rather than the browser's "localStorage."
+   - If a hacker tries to run a malicious script on our page (XSS), they can easily steal things from localStorage. But with HttpOnly, the browser will hide the cookie from JavaScript, making it way harder to steal.
+- Extra Layers of Protection: * Secure Flag: We made sure the token only travels over encrypted HTTPS connections.
+- SameSite Strict: This tells the browser: "Only send this cookie if the request is coming directly from our website." This is our main defense against CSRF attacks, where a fake site tries to trick your browser into performing actions on our server.
