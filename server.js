@@ -25,8 +25,6 @@ const sslOptions = {
 
 //Security 
 
-
-
 app.use(
     helmet({
         contentSecurityPolicy: {
@@ -53,6 +51,38 @@ app.use(express.static("public", {
         }
     }
 }));
+
+// Phase 2: Part B - Authentication & Role-Based Access Middleware
+
+//1. Checking if the user is logged in
+
+const authenticateJWT = (req, res, next) => {
+    const token = req.cookies.token; //For login cookies
+
+    if (!token) {
+        return res.status(401).json({ error: "Access denied. Please login first"});
+    }
+
+    try {
+        //Verify the token using our secret key
+        const verified = jwt.verify(token, "super-secret-key");
+        req.user = verified; 
+        next(); 
+    } catch (error) {
+        res.status(403).json({ error: "Invalid or expired token."}); 
+    }
+};
+
+// 2. This checks if user has the right ROLE (Admin vs User)
+const authorizeRoles = (...roles) => {
+    return (req, res, next) => {
+        if (!roles.includes(req.user.role)) {
+            return res.status(403).json({error: `Access denied. ${roles} permission required.`});
+        }
+    next();
+  };
+};
+
 
 // Phase 2: Mock User Database
 const users = [];
@@ -106,24 +136,25 @@ app.post("/feedback", (req, res) => {
     res.status(201).json(newFeedback);
 });
 
-//Private Routes (Not for Cache)
 
-app.get("/profile", (req, res) => {
-    res.set("cache-control", "no-store");
-
+// Accessible to ANY authenticated user
+app.get("/profile", authenticateJWT, (req, res) => {
+    res.set("cache-control", "no-store, private");
     res.json({
-        user: "Freelancer A",
-        role: "freelancer"
+        message: "Welcome to your profile",
+        user: req.user.username,
+        role: req.user.role
     });
 });
 
-app.get("/dashboard", (req, res) => {
+// Accessible ONLY to Admins
+app.get("/dashboard", authenticateJWT, authorizeRoles("admin"), (req, res) => {
     res.set("Cache-Control", "private, no-store");
-
-        res.json({
-            activeProjects: 3,
-            unreadFeedback: 5
-        });
+    res.json({
+        activeProjects: 3,
+        unreadFeedback: 5,
+        adminMessage: "System status: Healthy"
+    });
 });
 
 // Phase 2 - Part A - User Registration --
@@ -132,7 +163,7 @@ app.post("/register", async (req, res) => {
         const { username, password } = req.body;
 
         // 1. Checking existing users
-        user.find(u => u.username === username);
+        const existingUser = users.find(u => u.username === username);
         if (existingUser) {
             return res.status(400).json({ error: "User already exists"});
         }
