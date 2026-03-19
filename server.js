@@ -236,6 +236,33 @@ app.get("/logout", (req, res) => {
     res.json({ message: "Logged out successfully" });
 });
 
+
+// Google SSO Placeholder Route (because we can't get the real one yet)
+app.get("/auth/google"), (req, res) => {
+    //Google handshake
+    res.send("Redirecting to Google SSO... (Mocked for Phase 2");
+};
+
+// Phase 2: Part C = Token Refresh System
+// Lets the user stay without having to re-type their password
+app.post("/refresh-token", authenticateJWT, (req, res) => {
+    const newToken = jwt.sign(
+        {id: req.user.id, username: req.user.username, role: req.user.role}, 
+        "super-secret-key",
+        {expiresIn: "1h"}
+    );
+
+    res.cookie("token", newToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "Strict",
+        maxAge: 3600000
+    });
+    
+    res.json({message: "token refreshed successfully!"});
+});
+
+
 //Start Secure HTTPS Server
 
 https.createServer(sslOptions, app).listen(3000, () => {

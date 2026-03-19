@@ -84,3 +84,33 @@ To demonstrate the working prototype, we follow these steps:
 4. Login to trigger the redirect and dynamic greeting.
 5. Verify the `/logout` route clears the session and protects the data once again.
 
+------------------------------------------------------------
+
+### Phase 2 Reflection Checkpoints
+
+### Part A: Authentication Reasoning**
+We chose "Local Authentication" with Bcrypt hashing because it gives us total control over our user data and security. By using a cost factor of 10, we balanced the need for strong protection against brute-force attacks with a fast user experience. We also included a Google SSO entry point to align with modern usability standards, recognizing that many users prefer not to manage multiple passwords.
+
+### Part B: Access Control Trade-offs
+We structured our system using "Role-Based Access Control (RBAC)" with two levels: 'User' and 'Admin'. This keeps the system simple but secure. The main challenge was ensuring the middleware didn't create a "clunky" experience; we resolved this by using a central `authenticateJWT` guard that automatically checks permissions before the page even loads.
+
+### Part C: Token Strategy & Security
+We chose "HttpOnly Cookies" for token storage because they are invisible to JavaScript, effectively neutralizing "XSS (Cross-Site Scripting)" attacks that target `localStorage`. To balance security and usability, we implemented a "60-minute expiry" combined with a "Token Refresh system", ensuring users aren't constantly interrupted while working.
+
+### Part D: Risk Mitigation**
+To protect our users, we implemented:
+- CSRF Protection: Using `SameSite: Strict` on cookies.
+- Account Enumeration Defense: Using generic "Invalid username or password" messages so hackers can't "guess" which usernames exist.
+- Brute Force Defense: Adding Rate Limiting to the login route.
+- Session Fixation: We ensure that every login issues a brand new JWT, effectively "clearing" any old session state.
+
+### Part E: Testing Strategy
+We tested the system by simulating "Unauthorized" access attempts (trying to visit `/dashboard` without a cookie) and verified that the server correctly returned a "401 error". We also verified that "User" roles were successfully blocked from "Admin" routes with a "403 Forbidden" status.
+
+# Phase 2: Final Summary" section:
+
+Google SSO Placeholder: We implemented an /auth/google route and a corresponding UI button to demonstrate readiness for third-party integration, fulfilling the requirement for multi-provider authentication.
+
+Session Continuity (Token Refresh): We developed a /refresh-token endpoint that allows the application to issue a new JWT before the 60-minute window closes, preventing user frustration without compromising security.
+
+UI-Backend Synchronization: We successfully migrated the Google SSO styling to styles.css to maintain a clean separation of concerns, ensuring the HTML remains readable and focused on logic.
