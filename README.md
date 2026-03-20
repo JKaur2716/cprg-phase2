@@ -49,6 +49,7 @@ During testing, we discovered the `/profile` and `/dashboard` routes were still 
 
 
 ### 2. Fix: CSP Header Violations (Helmet)
+Implementing `helmet` initially broke the UI by blocking external fonts and internal scripts.
 The Fix: This one took us a while to figure out. Helmet was blocking our inline scripts entirely, which meant our login form was falling back to a GET request and putting the username and password directly in the URL — not great! We consolidated all CSP directives into a single Helmet initialization that whitelists 'unsafe-inline' for scripts and allows Google Fonts domains so our "Lexend" font loads correctly.
 
 ### 3. Dynamic Dashboard Integration
