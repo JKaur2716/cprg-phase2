@@ -140,4 +140,5 @@ vite.config.ts.timestamp-*
 
 cert/
 
-cookies.txt
+cookies.txtcookies.txt
+.DS_Store
